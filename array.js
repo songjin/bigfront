@@ -16,7 +16,7 @@ function flat(arr, depth = 1) {
     }
     return result;
 }
-// 实现Array.prototype.map
+// 实现Array.prototype.map 生成新的map
 Array.prototype.myMap = function(cb, thisArgs) {
     const result = [];
     this.forEach((...args) => {
@@ -25,3 +25,21 @@ Array.prototype.myMap = function(cb, thisArgs) {
     });
     return result;
 }
+
+// 实现Array.prototype.reduce  将array转换成value
+Array.prototype.myReduce = function (callback, initialValue ) {
+   // 判断当前传入的参数 如果不合法 throw new error
+   const argumentsLen = arguments.length;
+   if(argumentsLen === 1 && !this.length) {
+        throw new Error();
+   }
+   // 根据是否传initialValue设置初始值和index
+   let accumulator = argumentsLen === 1 ? this[0] : initialValue;
+   let index = argumentsLen === 1 ? 1 : 0;
+   // 执行回调返回值
+   for(let i = index;i < this.length;i++) {
+       accumulator = callback(accumulator, this[i], i ,this);
+   }
+   return accumulator;
+}
+  

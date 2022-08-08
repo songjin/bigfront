@@ -17,3 +17,5 @@ const myNew = (constructor, ...args) => {
     }
     return obj;
 }
+// 实现call
+// 实现apply

@@ -131,3 +131,52 @@ class Promise {
         }
     }
 }
+
+// 实现promise.all
+function all(promises) {
+    return new Promise((resolve, reject) => {
+      const result = [];
+      let pendingCount = promises.length;
+      if(promises.length === 0) {
+        resolve(result);
+        return;
+      }
+      for(let i = 0;i < promises.length;i++) {
+        Promise.resolve(promises[i]).then(res => {
+          result[i] = res;
+          pendingCount--;
+          if(pendingCount === 0) {
+            resolve(result);
+          }
+        }, err=> reject(err));
+        
+      }
+    });
+  }
+
+// 实现promise.allSettled
+function allSettled(promises) {
+    return new Promise((resolve) => {
+      const result = [];
+      let waitFor = promises.length;
+      if (waitFor === 0) {
+        resolve(result);
+      }
+      promises.forEach((promise, index) => {
+        Promise.resolve(promise)
+          .then((value) => result[index] = { status: "fulfilled", value })
+          .catch((reason) => result[index] = { status: "rejected", reason })
+          .finally(() => {
+            waitFor--;
+            if (waitFor === 0) {
+              resolve(result);
+            }
+          });
+      });
+    });
+}
+
+// 实现promise.any
+
+// 实现promise.race 
+  

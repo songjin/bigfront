@@ -149,10 +149,10 @@ function all(promises) {
             resolve(result);
           }
         }, err=> reject(err));
-        
+   
       }
     });
-  }
+}
 
 // 实现promise.allSettled
 function allSettled(promises) {
@@ -179,4 +179,11 @@ function allSettled(promises) {
 // 实现promise.any
 
 // 实现promise.race 
-  
+function race(promises) {
+    return new Promise((resolve, reject) => {
+        promises.forEach(promise => {
+            Promise.resolve(promise).then(data => resolve(data),
+            err => reject(err))
+        })
+    })
+}

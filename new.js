@@ -26,4 +26,12 @@ function myObjectCreate(proto) {
     return {__proto__: proto};
 }
 // 实现call
+Function.prototype.myCall = function (thisArgs, ...args) {
+    const symbol = Symbol();
+    const context = Object(thisArgs == undefined ? window : thisArgs);
+    context[symbol] = this;
+    const result = context[symbol](...args);
+    delete context[symbol];
+    return result;
+}
 // 实现apply

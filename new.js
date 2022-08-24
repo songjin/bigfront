@@ -17,5 +17,13 @@ const myNew = (constructor, ...args) => {
     }
     return obj;
 }
+// 实现Object.create
+// Object.create 定义：创建一个新对象，使用现有proto对象来作为新对象的原型
+function myObjectCreate(proto) {
+    if(typeof proto !== 'object' || !proto) {
+        throw new Error();
+    }
+    return {__proto__: proto};
+}
 // 实现call
 // 实现apply

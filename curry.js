@@ -21,3 +21,12 @@ const curriedJoin = curry(join);
 console.log(curriedJoin(1,2,3));
 console.log(curriedJoin(1)(2,3));
 console.log(curriedJoin(1,2)(3));
+
+// Infinite Currying
+function  add(a) {
+    return function (b) {
+        if(b) return add(a+b);
+        else return a;
+    }
+}
+console.log(add(5)(2)(4)(8)());

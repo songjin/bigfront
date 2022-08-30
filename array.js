@@ -26,6 +26,18 @@ Array.prototype.myMap = function(cb, thisArgs) {
     return result;
 }
 
+// 实现Array.prototype.filter
+Array.prototype.myFilter = function (cb, thisArgs) {
+    const result = [];
+    this.forEach((...args) => {
+        const item = args[0];
+        if(cb.apply(thisArgs, args)) {
+            result.push(item);
+        }
+    });
+    return result;
+}
+
 // 实现Array.prototype.reduce  将array转换成value
 Array.prototype.myReduce = function (callback, initialValue ) {
    // 判断当前传入的参数 如果不合法 throw new error

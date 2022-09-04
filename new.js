@@ -35,3 +35,11 @@ Function.prototype.myCall = function (thisArgs, ...args) {
     return result;
 }
 // 实现apply
+Function.prototype.myApply = function(thisArgs, args) {
+    const symbol = Symbol();
+    const context = Object(thisArgs == undefined ? window : thisArgs);
+    context[symbol] = this;
+    const result = context[symbol](...args);
+    delete context[symbol];
+    return result;
+}

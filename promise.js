@@ -225,6 +225,46 @@ class MyPromise {
     }
 }
 
+class MyPromise {
+  constructor(fn){
+    // 存储 reslove 回调函数列表
+    this.callbacks = []
+    const resolve = (value) => {
+      this.data = value // 返回值给后面的 .then
+      while(this.callbacks.length) {
+        let cb = this.callbacks.shift()
+        cb(value)
+      }
+    }
+    fn(resolve)
+  }
+  then(onResolvedCallback) {
+    return new MyPromise((resolve) => {
+      this.callbacks.push(() => {
+        const res = onResolvedCallback(this.data)
+        if (res instanceof MyPromise) {
+          res.then(resolve)
+        } else {
+          resolve(res)
+        }
+      })
+    })
+  }
+}
+// 这是测试案例
+new MyPromise((resolve) => {
+  setTimeout(() => {
+    resolve(1)
+  }, 1000)
+}).then((res) => {
+    console.log(res)
+    return new MyPromise((resolve) => {
+      setTimeout(() => {
+        resolve(2)
+      }, 1000)
+    })
+}).then(res =>{console.log(res)})
+
 // 实现promise.all
 function all(promises) {
     return new Promise((resolve, reject) => {
